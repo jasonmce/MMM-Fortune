@@ -1,136 +1,93 @@
-   /* Magic Mirror
-    * Module: MMM-Fortune
-    *
-    * By Mykle1
-    * 
-    */
-   Module.register("MMM-Fortune", {
+/* Magic Mirror
+ * Module: MMM-Fortune
+ *
+ * By Mykle1
+ * 
+ */
+Module.register("MMM-Fortune", {
 
-       // Module config defaults.
-       defaults: {
-           updateInterval: 60 * 60 * 1000, // every hour
-           fadeSpeed: 3000,
-           initialLoadDelay: 1250, // ms seconds delay
-           retryDelay: 2500,
-           header: "Opening your fortune cookie!",
-           maxWidth: "100%",
-       },
+    // Module config defaults.
+    defaults: {
+        updateInterval: 60 * 60 * 1000, // every hour
+        fadeSpeed: 3000,
+        initialLoadDelay: 1250, // ms seconds delay
+        header: "Opening your fortune cookie!",
+        maxWidth: "100%",
+        color: "#62FF00",
+        hideLuckyNumbers: false,
+    },
 
-       // Define required scripts.
-       getScripts: function() {
-           return ["moment.js"];
-       },
+    // Define required scripts.
+    getScripts: function () {
+        return ["moment.js"];
+    },
 
-       getStyles: function() {
-           return ["MMM-Fortune.css", "font-awesome.css"];
-       },
+    getStyles: function () {
+        return ["MMM-Fortune.css", "font-awesome.css"];
+    },
 
-       // Define start sequence.
-       start: function() {
-           Log.info("Starting module: " + this.name);
+    start: function () {
+        console.log("Starting module: " + this.name);
+        moment.locale(config.language);
+        this.scheduleUpdates();
+    },
 
-           // Set locale.
-           moment.locale(config.language);
+    getTemplate: function () {
+        return "MMM-Fortune.njk";
+    },
 
-           this.today = "";
-           this.fortune = [];
-           this.url = "http://fortunecookieapi.herokuapp.com/v1/cookie?fortuneId=&lottoId=&lessonId=&limit=";
-           this.scheduleUpdate();
-       },
+    getTemplateData: function () {
+        return {
+            emptyMessage: this.loaded ? null : "Telling your fortune...",
+            fortune: this.fortune,
+            luckyNumbers: this.luckyNumbers,
+            color: this.config.color,
+            maxWidth: this.config.maxWidth,
+            header: this.config.header,
+        };
+    },
 
-       getDom: function() {
-
-           var fortune = this.fortune;
-           var lesson = this.lesson;
-           var lotto = this.lotto;
-
-
-           var wrapper = document.createElement("div");
-           wrapper.className = "wrapper";
-           wrapper.style.maxWidth = this.config.maxWidth;
-
-
-           if (!this.loaded) {
-               wrapper.innerHTML = "Telling your fortune...";
-               wrapper.className = "bright light small";
-               return wrapper;
-           }
-           if (this.config.header != "") {
-               var header = document.createElement("header");
-               header.className = "header";
-               header.innerHTML = this.config.header;
-               wrapper.appendChild(header);
-           }
-
-           var top = document.createElement("div");
-           top.classList.add("content");
-
-
-           var title = document.createElement("h3");
-           title.classList.add("small");
-           title.innerHTML = this.fortune.message;
-           top.appendChild(title);
-
-
-           var des = document.createElement("p");
-           des.classList.add("xsmall", "bright");
-           des.innerHTML = 'English phrase:  ' + '&nbsp; ' + lesson.english + '&nbsp; ' + '&nbsp; ' + 'In Chinese:  ' + '&nbsp; ' + lesson.chinese + '&nbsp; ' + '&nbsp; ' + '  Pronounced:  ' + lesson.pronunciation; // <- Objects goes in there
-           top.appendChild(des);
-
-
-           var des2 = document.createElement("p");
-           des2.classList.add("xsmall", "bright");
-           var numbers = lotto.numbers.sort(function(a, b) {
-               return a - b
-           });
-           var lotNumbers = numbers;
-           var showNumbers = lotNumbers.join(', ');
-           des2.innerHTML = "Lucky Numbers ~ " + showNumbers;
-           top.appendChild(des2);
-
-           wrapper.appendChild(top);
-           return wrapper;
-
-       },
-      
-  /////  Add this function to the modules you want to control with voice //////
-
-    notificationReceived: function(notification, payload) {
+    // For voice control.
+    notificationReceived: function (notification, payload) {
         if (notification === 'HIDE_FORTUNE') {
             this.hide(1000);
-        }  else if (notification === 'SHOW_FORTUNE') {
+        }
+        if (notification === 'SHOW_FORTUNE') {
             this.show(1000);
         }
-            
     },
-      
 
-       processFortune: function(data) {
-           this.fortune = data.fortune;
-           this.lesson = data.lesson;
-           this.lotto = data.lotto;
-           this.loaded = true;
-       },
+    // Process fortune data into module variables.
+    processFortune: function (data) {
+        this.fortune = data.text;
+        this.luckyNumbers = this.config.hideLuckyNumbers
+            ? null
+            : data.numbers.split(',').sort(function (a, b) {
+                return a - b
+            });
+        this.loaded = true;
+    },
 
-       scheduleUpdate: function() {
-           setInterval(() => {
-               this.getFortune();
-           }, this.config.updateInterval);
+    // Set first and recurring refresh schedule.
+    scheduleUpdates: function () {
+        setTimeout(this.getFortune(), this.config.initialLoadDelay);
 
-           this.getFortune(this.config.initialLoadDelay);
-       },
+        setInterval(() => {
+            this.getFortune();
+        }, this.config.updateInterval);
+    },
 
+    // Message the helper to get new fortune values.
+    getFortune: function () {
+        this.sendSocketNotification('GET_FORTUNE');
+    },
 
-       getFortune: function() {
-           this.sendSocketNotification('GET_FORTUNE', this.url);
-       },
+    // Handle fortune update response from helper.
+    socketNotificationReceived: function (notification, payload) {
+        if (notification === "FORTUNE_RESULT") {
+            this.processFortune(payload);
+            this.updateDom(this.config.fadeSpeed);
+        }
+    },
 
-       socketNotificationReceived: function(notification, payload) {
-           if (notification === "FORTUNE_RESULT") {
-               this.processFortune(payload);
-               this.updateDom(this.config.fadeSpeed);
-           }
-           this.updateDom(this.config.initialLoadDelay);
-       },
-
-   });
+});

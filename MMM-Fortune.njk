@@ -1,0 +1,24 @@
+{# Template file for MMM-Fortune #}
+<div class="wrapper" style="maxwidth: {{ maxWidth }}; color: {{ color }}">
+    {% if header %}
+        <header>{{ header }}</header>
+    {% endif %}
+
+    {% if emptyMessage %}
+        {{ emptyMessage }}
+    {% endif %}
+
+    {% if fortune or luckyNumbers %}
+        <div class="content">
+            {% if fortune %}
+                <h3 class="small">{{ fortune }}</h3>
+            {% endif %}
+
+            {% if luckyNumbers %}
+                <p class="bright xsmall" style="color: {{ color }}">
+                    Lucky Numbers ~ {{ luckyNumbers }}
+                </p>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

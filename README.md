@@ -44,8 +44,9 @@ Fortunes exactly as you would find them inside a Fortune Cookie. Words of wisdom
 | **Option** | **Default** | **Description** |
 | --- | --- | --- |
 | `maxWidth` | `100%` | Stretch across top_bar,bottom_bar, thirds. |
+| `color` | `"#62FF00"` | Color of text. |
 | `header` | `text` | I'm not a fan of headers but the option is yours. |
 | `animationSpeed` | `3000` | The speed at which the new Fortune fades in ms. |
-| `updateInterval` | `60*60*1000` | 1 hour. |
 | `initialLoadDelay` | `1250` | Module load delay in ms. |
-| `retryDelay` | `2500`  |Delay to retry fetching data. |
+| `updateInterval` | `60*60*1000` | 1 hour. |
+| `hideLuckyNumber` | `false` | Do not display lucky numbers. |

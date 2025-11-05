@@ -9,28 +9,25 @@ const request = require('request');
 
 module.exports = NodeHelper.create({
 
-    start: function() {},
+    start: function() {
+        this.fortuneApiUrl = "https://api.viewbits.com/v1/fortunecookie?mode=random";
+    },
 
-    getFortune: function(url) {
+    queryFortuneApi: function() {
         request({
-            url: url,
+            url: this.fortuneApiUrl,
             method: 'GET'
         }, (error, response, body) => {
             if (!error && response.statusCode == 200) {
-                var result = JSON.parse(body)[0];
+                var result = JSON.parse(body);
                 this.sendSocketNotification('FORTUNE_RESULT', result);
             }
         });
     },
 
-
-    getDate: function() {
-        return (new Date()).toLocaleDateString();
-    },
-    
-    socketNotificationReceived: function(notification, payload) {
+    socketNotificationReceived: function(notification) {
         if (notification === 'GET_FORTUNE') {
-            this.getFortune(payload);
+            this.queryFortuneApi();
         }
     }
 
