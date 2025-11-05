@@ -3,13 +3,12 @@ A MagicMirror module that gives you free Fortune Cookie fortunes.
 
 ## Examples
 
-![](Capture2.JPG)
-
-![](Capture3.JPG)
-
-![](Capture5.JPG)
-
-* maxWidth: 100%, colored title text. Editable text sizes and colors. top/bottom_bar, upper/lower_third, middle_center.
+| Screenshot | Example image |
+| --- | --- |
+| Warmup message | ![Warmup message shown before first request says "telling your fortune"](readme-media/Warmup%20message.webp) |
+| Fortune and numbers | ![Fortune and lucky numbers](readme-media/Fortune%20and%20numbers.webp) |
+| Hide lucky numbers | ![Fortune without lucky numbers](readme-media/Hide%20lucky%20numbers.webp) |
+| Alternate text color | ![Fortune with alternate text color](readme-media/Alternate%20color.webp) |
 
 
 ## Fortunes are fun!
@@ -49,4 +48,4 @@ Fortunes exactly as you would find them inside a Fortune Cookie. Words of wisdom
 | `animationSpeed` | `3000` | The speed at which the new Fortune fades in ms. |
 | `initialLoadDelay` | `1250` | Module load delay in ms. |
 | `updateInterval` | `60*60*1000` | 1 hour. |
-| `hideLuckyNumber` | `false` | Do not display lucky numbers. |
+| `hideLuckyNumber` | `false` | Do not hide lucky numbers. |
