@@ -48,4 +48,4 @@ Fortunes exactly as you would find them inside a Fortune Cookie. Words of wisdom
 | `animationSpeed` | `3000` | The speed at which the new Fortune fades in ms. |
 | `initialLoadDelay` | `1250` | Module load delay in ms. |
 | `updateInterval` | `60*60*1000` | 1 hour. |
-| `hideLuckyNumber` | `false` | Do not hide lucky numbers. |
+| `hideLuckyNumbers` | `false` | Do not hide lucky numbers. |
