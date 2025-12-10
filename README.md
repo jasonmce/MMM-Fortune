@@ -1,5 +1,5 @@
 # MMM-Fortune
-A MagicMirror module that gives you free Fortune Cookie fortunes.
+A [MagicMirror2](https://docs.magicmirror.builders) module that gives you free [Fortune Cookie fortunes](https://viewbits.com/docs/fortune-cookie-api-documentation).
 
 ## Examples
 
@@ -23,7 +23,7 @@ Fortunes exactly as you would find them inside a Fortune Cookie. Words of wisdom
 
 ## Installation
 
-* `git clone https://github.com/mykle1/MMM-Fortune.git` into the `~/MagicMirror/modules` directory.
+* `git clone https://github.com/jasonmce/MMM-Fortune.git` into the `~/MagicMirror/modules` directory.
 * `cd MMM-Fortune`
 * `npm install`
 
@@ -49,3 +49,9 @@ Fortunes exactly as you would find them inside a Fortune Cookie. Words of wisdom
 | `initialLoadDelay` | `1250` | Module load delay in ms. |
 | `updateInterval` | `60*60*1000` | 1 hour. |
 | `hideLuckyNumbers` | `false` | Do not hide lucky numbers. |
+
+## Thanks to
+
+[<img src="https://docs.magicmirror.builders/logo.png" alt="ViewBits" style="height: 2rem;">](hhttps://docs.magicmirror.builders/) for the main application and development documentation.
+
+[<img src="https://viewbits.com/wp-content/uploads/logo-text-viewbits.png" alt="ViewBits" style="height: 2rem;">](https://viewbits.com/docs/fortune-cookie-api-documentation) for the API
