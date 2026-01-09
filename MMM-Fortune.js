@@ -1,23 +1,22 @@
 /* Magic Mirror
  * Module: MMM-Fortune
  *
- * By Mykle1
- * 
+ * By JasonMcE
+ * Forked and exteded from MMM-Fortune by Mykle1
  */
-Module.register("MMM-Fortune", {
 
-    // Module config defaults.
+Module.register("MMM-Fortune", {
+	// Define module defaults
     defaults: {
-        updateInterval: 60 * 60 * 1000, // every hour
+        updateInterval: 60 * 60 * 1000,
         fadeSpeed: 3000,
-        initialLoadDelay: 1250, // ms seconds delay
+        initialLoadDelay: 1250,
         header: "Opening your fortune cookie!",
         maxWidth: "100%",
         color: "#62FF00",
         hideLuckyNumbers: false,
     },
 
-    // Define required scripts.
     getScripts: function () {
         return ["moment.js"];
     },
@@ -57,7 +56,14 @@ Module.register("MMM-Fortune", {
         }
     },
 
-    // Process fortune data into module variables.
+    /**
+     * Process fortune data into module variables fortune and luckyNumbers.
+     * @param {Object} data - The fortune data.
+     * 
+     * Data is object with the following properties:
+     * - text: The fortune text.
+     * - numbers: CSV string of numbers.
+     */
     processFortune: function (data) {
         this.fortune = data.text;
         this.luckyNumbers = this.config.hideLuckyNumbers
@@ -77,17 +83,22 @@ Module.register("MMM-Fortune", {
         }, this.config.updateInterval);
     },
 
-    // Message the helper to get new fortune values.
+    // Message the helper for new fortune values.
     getFortune: function () {
         this.sendSocketNotification('GET_FORTUNE');
     },
 
-    // Handle fortune update response from helper.
+    /**
+     * Override socket notification handler.
+     * @param {string} notification - The notification name.
+     * @param {Object} payload - The notification payload.
+     * 
+     * Handle fortune update response from helper.
+     */
     socketNotificationReceived: function (notification, payload) {
         if (notification === "FORTUNE_RESULT") {
             this.processFortune(payload);
             this.updateDom(this.config.fadeSpeed);
         }
     },
-
 });

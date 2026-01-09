@@ -1,8 +1,8 @@
-/* Magic Mirror
+/* Magic Mirror NodeHelper
  * Module: MMM-Fortune
  *
- * By Mykle1
- * 
+ * By JasonMcE
+ * Forked and exteded from MMM-Fortune by Mykle1
  */
 const NodeHelper = require('node_helper');
 const request = require('request');

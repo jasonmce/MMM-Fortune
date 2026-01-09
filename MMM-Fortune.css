@@ -1,18 +1,15 @@
 .MMM-Fortune .header {
-  text-align: center;          /* Aligns header text left, center or right) */
-  font-size: 15px;             /* Sets header text size */
+  text-align: center;
+  font-size: 15px;
 }
 
-.MMM-Fortune h3.small {
-  font-size: 21px;             /* size for the Fortune text */
-  margin: 5px;                 /* Margin between Fortune and Phrases */
+/* Fortune text */
+.MMM-Fortune h3 {
+  font-size: 21px;
+  margin: 5px;
 }
-
+/* Lucky numbers text */
 .MMM-Fortune p.xsmall.bright {
-  font-size: 18px;             /* size for Phrase and Lucky Numbers text */
-}
-
-.MMM-Fortune p.xsmall.bright {
-  font-size: 18px;             /* size for Phrase and Lucky Numbers text */
-  margin: 5px;                 /* Margin between Phrase and Lucky Numbers */
+  font-size: 18px;
+  margin: 5px;                 
 }
