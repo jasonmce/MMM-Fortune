@@ -1,0 +1,11 @@
+/* Config Sample snippet for MMM-Fortune */
+		{
+			module: "MMM-Fortune",
+			position: "lower_third",
+			config: {
+				maxWidth: "100%",    
+				header: "Feeling lucky?",
+				updateInterval: 15000,
+				hideLuckyNumbers: false,
+			}
+		},	

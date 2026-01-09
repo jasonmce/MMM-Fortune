@@ -50,6 +50,30 @@ Fortunes exactly as you would find them inside a Fortune Cookie. Words of wisdom
 | `updateInterval` | `60*60*1000` | 1 hour. |
 | `hideLuckyNumbers` | `false` | Do not hide lucky numbers. |
 
+## Development
+
+You can easily create a development environment for MMM-Fortune by spinning up a local MM2 server that includes MMM-Fortune and allows you to view the results in your browser.
+
+To develop, run:
+```bash
+# Clone the MagicMirror server environment.
+git clone https://github.com/MagicMirrorOrg/MagicMirror MMM-Fortune-dev
+cd MMM-Fortune-dev/
+
+# Clone the MMM-Fortune module and install dependencies
+git clone git@github.com:jasonmce/MMM-Fortune.git modules/MMM-Fortune
+npm install --prefix modules/MMM-Fortune
+
+# Copy the sample config file and add the MMM-Fortune module
+cp config/config.js.sample config/config.js
+sed -i '/modules: \[/r modules/MMM-Fortune/config.MMM-Fortune.dev' config/config.js
+
+# Install dependencies and start the server
+npm install
+node serveronly
+```
+and then go to http://localhost:8080 to see the results
+
 ## Thanks to
 
 [<img src="https://docs.magicmirror.builders/logo.png" alt="ViewBits" style="height: 2rem;">](hhttps://docs.magicmirror.builders/) for the main application and development documentation.
